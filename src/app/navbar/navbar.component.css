@@ -1,0 +1,33 @@
+.navbar{
+    z-index: 10;
+    height: 10vh;
+  /*  background: rgb(9,9,121) !important;
+    background: linear-gradient(90deg, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 50%, rgba(9,9,121,1) 100%) !important;
+*/}
+
+.nav-item{
+    font-weight: 800;
+    margin-left: 18px;
+    margin-right: 18px;
+    padding: 10px;  
+}
+
+.navbar-brand{
+    font-size: 2em;
+}
+
+
+@media only screen and (max-width:576px) {
+    
+    .navbar-collapse{
+        z-index: 20;
+        background: rgb(68, 68, 68);
+    }
+  }
+
+@media only screen and (min-width:577px) and (max-width:992px){
+    .navbar-collapse{
+        z-index: 20;
+        background: rgb(68, 68, 68);
+    }
+}
