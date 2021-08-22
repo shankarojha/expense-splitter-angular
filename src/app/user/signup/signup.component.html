@@ -1,1 +1,46 @@
-<p>signup works!</p>
+<app-navbar>
+    <span class="user">user</span>
+    <a class="dropdown-item" routerLink="/user/signin">Signin</a>
+</app-navbar>
+
+<body class="login-page">
+    <div class="container">
+        
+        <div class="row gradient-bg">
+            
+            <div class="col-md-12 box">
+                <h1 style="text-align: center; margin-top: 5px;">Signup</h1>
+                <form class="formBox">
+                    <div class="form-group">
+                        <label for="contactName1">First Name</label>
+                        <input name="contactName" [(ngModel)]="firstName" type="text" class="form-control"
+                            id="contactName1" />
+                        <label for="contactName2">Last Name</label>
+                        <input name="contactName" [(ngModel)]="lastName" type="text" class="form-control"
+                            id="contactName2" />
+                    </div>
+                    <div class="form-group">
+                        <label for="InputEmail1">Email address</label>
+                        <input name="email" [(ngModel)]="email" type="email" class="form-control" id="InputEmail1" />
+                    </div>
+                    <div class="form-group">
+                        <label for="InputPassword1">Password</label>
+                        <input name="password" [(ngModel)]="password" type="password" class="form-control"
+                            id="InputPassword1" />
+                    </div>
+                    <div class="form-group">
+                        <label for="mobileNumber">Mobile Number</label>
+                        <input name="mobile" [(ngModel)]="mobile" type="number" class="form-control" id="mobile1" />
+                    </div>
+
+                    <button (click)="signupFunction()" type="submit" class="btn btn-primary">
+                        Submit
+                    </button>
+                    <div style="text-align: center; font-size: 1.5vw;">
+                        <a class="linkClass" routerLink="/">Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>

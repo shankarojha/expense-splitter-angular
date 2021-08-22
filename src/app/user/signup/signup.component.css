@@ -1,0 +1,135 @@
+
+
+.row {
+    background-color: rgba(255, 255, 255, 0);
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 80%;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.233);
+    padding: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition: 0.5s;
+  }
+  
+  .row:hover {
+    width: 81.5vw;
+    box-shadow: 0 12px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  
+  .box {
+    background-color: rgb(255, 255, 255);
+  }
+  
+  .formBox {
+    padding: 20px;
+  }
+  
+  .form-group {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    margin-bottom: 20px;
+  }
+  
+  .linkClass {
+    color: black;
+  }
+  
+  .formBox input,
+  .formBox label,
+  .formBox dp-date-picker {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    transition: 0.25s;
+  }
+  
+  .formBox button {
+    background-color: white;
+    color: black;
+    font-size: 20px;
+    transition: 0.25s;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 3px 100px;
+    width: auto;
+    margin-top: 5vh;
+  }
+  
+  .formBox button:hover {
+    background-color: black;
+    color: white;
+  }
+  
+  .formBox button:focus {
+    background-color: rgb(255, 255, 255) !important;
+    color: rgb(0, 0, 0);
+  }
+  
+  .formBox input:not([type="file"]):hover {
+    width: 55%;
+    border-color: green;
+  }
+  
+  .md3{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: none    ;
+  }
+  
+  @media only screen and (max-width: 480px) {
+    .formBox button {
+      font-size: 10px;
+    }
+  
+    .form-group {
+      font-size: 15px;
+    }
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .formBox button {
+      font-size: 10px;
+    }
+  
+    .form-group {
+      font-size: 15px;
+    }
+  }
+  
+  .gradient-bg {
+    background: linear-gradient(
+      60deg,
+      hsl(224, 85%, 66%),
+      hsl(269, 85%, 66%),
+      hsl(314, 85%, 66%),
+      hsl(359, 85%, 66%),
+      hsl(44, 85%, 66%),
+      hsl(89, 85%, 66%),
+      hsl(134, 85%, 66%),
+      hsl(179, 85%, 66%)
+    );
+    background-size: 300% 300%;
+    background-position: 0 25%;
+    animation: moveGradient 4s alternate infinite;
+  }
+  
+  @keyframes moveGradient {
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+  
