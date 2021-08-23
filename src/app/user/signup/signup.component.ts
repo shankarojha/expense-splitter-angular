@@ -32,7 +32,7 @@ export class SignupComponent implements OnInit {
       this.toastr.warning('please enter your First Name');
 
     } else if (!this.lastName) {
-      let element = document.getElementById('dobirth');
+      let element = document.getElementById('contactName2');
       element.classList.add('is-invalid');
       this.toastr.warning('please enter your Last Name');
 

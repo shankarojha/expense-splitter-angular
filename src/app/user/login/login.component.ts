@@ -52,17 +52,17 @@ export class LoginComponent implements OnInit {
             this.Cookie.set('mobile',apiResponse.data.userDetails.mobile);
             this.Cookie.set('firstName',apiResponse.data.userDetails.firstName);
             this.Cookie.set('lastName',apiResponse.data.userDetails.lastName);
+            this.Cookie.set('authToken', apiResponse.data.authToken.authToken);
 
 
 
             this.appService.setUserInfoToLocalStorage(
               apiResponse.data.userDetails
             );
-            console.log(apiResponse);
             let routerNavigate = () =>{
-              this.router.navigate(['/dashboard'])
+             this.router.navigate(['/dashboard'])
             }
-            setTimeout(routerNavigate,2000)
+            setTimeout(routerNavigate,4000)
             this.toastr.success(apiResponse.message);
           } else {
             this.toastr.error(apiResponse.message);

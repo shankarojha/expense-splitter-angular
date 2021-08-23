@@ -1,0 +1,33 @@
+#notifications{
+    background: rgb(65, 65, 65);
+    margin-top: 20px;
+    color :white;
+}
+
+#expenses{
+    margin-top: 20px;
+}
+.row{
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.table:hover{
+    background: rgb(178, 219, 145);
+    color:rgb(0, 0, 0);
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.modal-dialog {
+    position: fixed;
+    margin: auto;
+    width: 320px;
+    left: 0px;
+    overflow-y: initial !important;
+}
+
+.modal-body{
+    height: 80vh;
+    overflow-y: auto;
+}

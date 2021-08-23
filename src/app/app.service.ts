@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import 'rxjs'
 
 @Injectable({
@@ -11,7 +12,7 @@ import 'rxjs'
 export class AppService {
   private url = 'http://localhost:3000'
 
-  constructor(private http:HttpClient, public router: Router) { }
+  constructor(private http:HttpClient, public router: Router, private Cookie:CookieService) { }
 
   public getUserInfoFromLocalStorage = () =>{
     return JSON.parse(localStorage.getItem('userInfo'))
@@ -51,4 +52,39 @@ export class AppService {
     .set('password', data.password)
     return this.http.post(`${this.url}/resetpassword?authToken=${data.authToken}`,params)
   }
+
+  public createExpense(data):Observable<any>{
+    const params = new HttpParams()
+    .set('createdBy',data.createdBy)
+    .set('paidBy',data.paidBy)
+    .set('debtors',data.debtors)
+    .set('amount', data.amount)
+    return this.http.post(`${this.url}/createexpense?authToken=${this.Cookie.get('authToken')}`,params)
+  }
+
+  public getUserExpenses():Observable<any>{
+    return this.http.get(`${this.url}/getexpenseofuser/${this.Cookie.get('email')}?authToken=${this.Cookie.get('authToken')}`)
+  }
+
+  public getExpenseDetails(expenseId):Observable<any>{
+    return this.http.get(`${this.url}/getexpense/${expenseId}?authToken=${this.Cookie.get('authToken')}`)
+
+  }
+
+  public logout(): Observable<any> {
+    const params = new HttpParams()
+      .set('authToken', this.Cookie.get('authToken'))
+      .set('userId', this.Cookie.get('userId'))
+    return this.http.post(`${this.url}/logout`, params);
+  }
+
+  public updatePayment(data): Observable<any> {
+    const params = new HttpParams()
+    .set('email',data.email)
+    .set('paid',data.paid)
+    .set('ExpenseId',data.ExpenseId)
+    .set('userEmail',data.userEmail)
+    return this.http.post(`${this.url}/updatepaymentInfo?authToken=${this.Cookie.get('authToken')}`, params)
+  }
+
 }

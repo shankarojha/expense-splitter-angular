@@ -1,0 +1,14 @@
+
+
+.col-12, .col-6{
+    color: rgb(0, 0, 0);
+    margin-top: 10px;
+}
+
+.fa-times{
+    color:rgb(255, 38, 0)
+}
+
+.fa-times:hover{
+    color:rgb(141, 23, 3)
+}
