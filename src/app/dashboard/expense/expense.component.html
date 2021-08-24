@@ -9,29 +9,88 @@
                 <h3>Expense: {{expenseName}}</h3>
             </div>
             <div class="col-12">
-                <h3>Amount: {{amount}}</h3>
+                <h3>Amount: <input type="number" [(ngModel)]="amount"/></h3>
             </div>
             <div class="col-12">
                 <h3>Paid By: {{paidBy}}</h3>
             </div>
             <div class="col-12">
-                <h3>Members:</h3>
-                <div class="row" *ngFor="let item of members">
-                    <div class="col-5">
-                        <input type="text" [(ngModel)]="item.email" readonly/>
+
+                <table class="table table-striped table-dark text-center">
+                    <thead class="thead-light">
+                        <tr>
+
+                            <th scope="col">Member</th>
+                            <th scope="col">Amount Owed</th>
+                            <th scope="col">Remaining amount</th>
+                            <th scope="col">Amount Paid</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of members">
+
+                            <td>{{item.email}}</td>
+                            <td>{{item.debt}}</td>
+                            <td *ngIf="item.remaining==0">Payment Complete</td>
+                            <td *ngIf="item.remaining!==0">{{item.remaining}}</td>
+                            <td><input type="number" [(ngModel)]="item.paid" (change)="paidClickedEvent(item.email,item.paid)"/>&nbsp;
+                                <a #removeMemberToggler (click)="removeMember(item.email)"><i class="fa fa-times"><span class="tooltiptext">&nbsp;Remove member</span></i></a>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div class="row">
+                    <h4>Add Members: </h4>
+                    <div class="col-3">
+                        <input type="text" placeholder="email" [(ngModel)]="addEmail"/>
+                     </div>
+                     <div class="col-3">
+                         <input type="number" placeholder="amount paid" [(ngModel)]="addPaid"/>
+                     </div>
+                     <div class="col-2 text-center">
+                        <button class="btn btn-primary" (click)="addDebtors()">Add member</button>
                     </div>
-                    <div class="col-5">
-                        <input type="number" [(ngModel)]="item.paid" (change)="paidClickedEvent(item.email,item.paid)"/>
-                    </div>
-                    <div class="col-2">
-                        <a #removeMemberToggler (click)="removeMember(item.email)"><i class="fa fa-times"></i></a>
-                    </div>
-                    
+                </div>
+                <div class="col-12">
+                    <p style="font-weight: 800;" *ngIf="debtorsToAdd.length>=1">Members that will be added:</p>
+                    <p *ngFor="let item of debtorsToAdd">{{item.email}}</p>
+                    <p style="font-weight: 800;" *ngIf="membersToremove.length>=1">Members that will be removed:</p>
+                    <p *ngFor="let item of membersToremove">{{item}}</p>
                 </div>
                 <div class="col-6">
-                    <button class="btn btn-dark" (click)="savePaymentInfo()">Save</button>
+                    <button class="btn btn-dark" (click)="savePaymentInfo()">Update Payment</button>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-dark" (click)="editExpense()">Save</button>
+                </div>
+                <div class="col-6">
+                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalLong">
+                        History
+                    </button>
                 </div>
             </div>
         </div>
+        <!--MODAL-->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">History</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <p *ngFor="let item of history"><i class="fa fa-dot-circle-o"></i>&nbsp;&nbsp;{{item}}</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <!-- MODAL ENDS-->
     </div>
 </body>

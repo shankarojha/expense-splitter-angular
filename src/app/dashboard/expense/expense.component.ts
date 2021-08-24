@@ -27,6 +27,10 @@ export class ExpenseComponent implements OnInit {
   public createdBy:string
   public changePayment = []
   public membersToremove = []
+  public debtorsToAdd = []
+  public addEmail:string
+  public addPaid:number
+  public totalDebters:number
   public removeMemberToggle:Boolean = false
   toggleClass: boolean = false;
 
@@ -62,8 +66,15 @@ export class ExpenseComponent implements OnInit {
       this.amount = apiResponse.data.amount
       this.paidBy = apiResponse.data.paidBy
       this.modifiedOn = apiResponse.data.modifiedOn
+      this.totalDebters = apiResponse.data.debtors.length+1
       for(let x of apiResponse.data.debtors){
-        this.members.push(x)
+        let membersObj = {
+          email:x.email,
+          paid:x.paid,
+          debt: Math.round(this.amount/this.totalDebters),
+          remaining: Math.round((this.amount/this.totalDebters)-x.paid)
+        }
+        this.members.push(membersObj)
       }
     })
   }
@@ -109,10 +120,59 @@ export class ExpenseComponent implements OnInit {
   removeMember = (email) =>{
     if(!this.membersToremove.includes(email)){
       this.membersToremove.push(email)
-      this.removeMemberEl.nativeElement.innerHTML = '';
     console.log(this.membersToremove)
     }else{
       this.toastr.error('member already added to removal list')
+    }
+  }
+
+  addDebtors = () =>{
+    const { length } = this.debtorsToAdd;
+    const id = length + 1;
+    let found = this.debtorsToAdd.some(el => el.email === this.addEmail);
+    if (!found) {
+      let findAgain = this.members.some(el => el.email === this.addEmail);
+      if (!findAgain) {
+        this.debtorsToAdd.push({ email: this.addEmail, paid: this.addPaid })
+        this.addEmail=null;
+        this.addPaid=null;
+      } else {
+        this.toastr.error('member already added to list. Please save to continue')
+      }
+    } else{
+      this.toastr.error('member already added to list. Please save to continue')
+    }
+    console.log(this.debtorsToAdd)
+  };
+
+  editExpense = () =>{
+
+    let data = {
+      ExpenseId:this.expenseId,
+      amount:this.amount,
+      debtors: null,
+      removeMembers: null,
+    }
+    if (this.debtorsToAdd) {
+      data.debtors = JSON.stringify(this.debtorsToAdd);
+    }
+    if (this.membersToremove) {
+      data.removeMembers = JSON.stringify(this.membersToremove);
+    }
+
+    if (data) {
+      this.appService.editExpense(data).subscribe(
+        (apiResponse) => {
+          if (apiResponse.status === 200) {
+            this.toastr.success('successfully edited');
+          } else {
+            this.toastr.error(apiResponse.message);
+          }
+        },
+        (err) => {
+          this.toastr.error(err);
+        }
+      );
     }
   }
 

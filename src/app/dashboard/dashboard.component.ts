@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
 
   public userExpenses = []
   public userName = this.Cookie.get('firstName')+' '+this.Cookie.get('lastName')
-  public userEmail = 'esx@gmail.com5'//this.Cookie.get('email')
+  public userEmail =this.Cookie.get('email')
   public userNotifications = []
 
   constructor(private appService:AppService, private router:Router, private toastr:ToastrService, private Cookie:CookieService, public SocketService: SocketService) { }

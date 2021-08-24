@@ -63,7 +63,8 @@ export class AppService {
   }
 
   public getUserExpenses():Observable<any>{
-    return this.http.get(`${this.url}/getexpenseofuser/${this.Cookie.get('email')}?authToken=${this.Cookie.get('authToken')}`)
+    let authToken = this.Cookie.get('authToken')
+    return this.http.get(`${this.url}/getexpenseofuser/${this.Cookie.get('email')}?authToken=${authToken}`)
   }
 
   public getExpenseDetails(expenseId):Observable<any>{
@@ -85,6 +86,15 @@ export class AppService {
     .set('ExpenseId',data.ExpenseId)
     .set('userEmail',data.userEmail)
     return this.http.post(`${this.url}/updatepaymentInfo?authToken=${this.Cookie.get('authToken')}`, params)
+  }
+
+  public editExpense(data):Observable<any>{
+    const params = new HttpParams()
+    .set('ExpenseId',data.ExpenseId)
+    .set('debtors',data.debtors)
+    .set('amount', data.amount)
+    .set('removeMembers',data.removeMembers)
+    return this.http.post(`${this.url}/editexpense?authToken=${this.Cookie.get('authToken')}`,params)
   }
 
 }

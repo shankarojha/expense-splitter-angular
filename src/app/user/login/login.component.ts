@@ -46,13 +46,13 @@ export class LoginComponent implements OnInit {
       this.appService.loginFunction(data).subscribe(
         (apiResponse) => {
           if (apiResponse.status === 200) {
-            this.Cookie.set('authToken', apiResponse.data.authToken.authToken);
+            console.log(apiResponse)
             this.Cookie.set('userId', apiResponse.data.userDetails.userId);
             this.Cookie.set('email', apiResponse.data.userDetails.email);
             this.Cookie.set('mobile',apiResponse.data.userDetails.mobile);
             this.Cookie.set('firstName',apiResponse.data.userDetails.firstName);
             this.Cookie.set('lastName',apiResponse.data.userDetails.lastName);
-            this.Cookie.set('authToken', apiResponse.data.authToken.authToken);
+            this.Cookie.set('authToken', apiResponse.data.authToken);
 
 
 

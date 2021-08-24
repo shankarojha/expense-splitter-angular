@@ -8,13 +8,13 @@
         <div class="row">
             <div class="col-md-2 d-flex flex-column align-items-center justify-content-center" id="notifications">
                 <div class="row">
-                    <button class="btn btn-light">Create Expense</button>
+                    <button routerLink="/dashboard/create" class="btn btn-light">Create Expense</button>
                 </div>
                 <div class="row text-center">
                     <button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModalLong">
                         Notifications
                     </button>
-                  </div>
+                </div>
             </div>
             <div class="col-md-10 text-center" id="expenses">
                 <!-- TABLE-->
@@ -49,12 +49,13 @@
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                  <h5 class="modal-title" id="exampleModalLongTitle">Your notifications</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
+                    <p *ngIf="userNotifications.length==0">No new notifications available</p>
                     <p *ngFor="let item of userNotifications"><i class="fa fa-dot-circle-o"></i>&nbsp;&nbsp;{{item}}</p>
                 </div>
                 <div class="modal-footer">
