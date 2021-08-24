@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
             let routerNavigate = () =>{
              this.router.navigate(['/dashboard'])
             }
-            setTimeout(routerNavigate,4000)
+            setTimeout(routerNavigate,2000)
             this.toastr.success(apiResponse.message);
           } else {
             this.toastr.error(apiResponse.message);

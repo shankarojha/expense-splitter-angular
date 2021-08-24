@@ -55,6 +55,7 @@ export class AppService {
 
   public createExpense(data):Observable<any>{
     const params = new HttpParams()
+    .set('ExpenseName',data.ExpenseName)
     .set('createdBy',data.createdBy)
     .set('paidBy',data.paidBy)
     .set('debtors',data.debtors)
@@ -90,6 +91,7 @@ export class AppService {
 
   public editExpense(data):Observable<any>{
     const params = new HttpParams()
+    .set('userEmail', data.userEmail)
     .set('ExpenseId',data.ExpenseId)
     .set('debtors',data.debtors)
     .set('amount', data.amount)

@@ -12,9 +12,9 @@
     padding: 10px;
 }
 
-.table:hover{
-    background: rgb(178, 219, 145);
-    color:rgb(0, 0, 0);
+tr:hover{
+    background: rgb(90, 90, 90);
+    color:rgb(255, 255, 255);
     cursor: pointer;
     transition: 0.25s;
 }
