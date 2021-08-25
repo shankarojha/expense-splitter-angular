@@ -9,7 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class SocketService {
 
-  private url = 'http://localhost:3000'
+  private url = 'http://api.firstpro.online/api/v1'
   public socket;
 
   constructor(public http: HttpClient) {
