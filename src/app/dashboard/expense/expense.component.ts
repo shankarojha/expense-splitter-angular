@@ -101,6 +101,10 @@ export class ExpenseComponent implements OnInit {
       this.appService.updatePayment(data).subscribe((apiResponse) => {
         if (apiResponse.status == 200) {
           this.toastr.success(apiResponse.message);
+          let routerNavigate = () =>{
+            this.router.navigate([`/dashboard`])
+           }
+           setTimeout(routerNavigate,1000)
         } else {
           this.toastr.error(apiResponse.message);
         }
@@ -166,6 +170,10 @@ export class ExpenseComponent implements OnInit {
       this.appService.editExpense(data).subscribe(
         (apiResponse) => {
           if (apiResponse.status === 200) {
+            let routerNavigate = () =>{
+              this.router.navigate([`/dashboard`])
+             }
+             setTimeout(routerNavigate,1000)
             this.toastr.success('successfully edited');
           } else {
             this.toastr.error(apiResponse.message);
@@ -182,13 +190,29 @@ export class ExpenseComponent implements OnInit {
     this.appService.logout().subscribe((apiResponse) => {
       if (apiResponse.status === 200) {
         console.log("logout function called")
-        this.Cookie.deleteAll('http://localhost:4200', 'http://localhost:4200');
+        this.Cookie.deleteAll();
 
         this.router.navigate(['/']);
       } else {
         this.toastr.error(apiResponse.message);
       }
     }, (err) => {
+      this.toastr.error("some error occured");
+    })
+  }
+
+  public deleteExpense = () => {
+    this.appService.deleteExpense(this.Cookie.get('selectedExpense')).subscribe((apiResponse)=>{
+      if(apiResponse.status === 200){
+        let routerNavigate = () =>{
+          this.router.navigate(['/dashboard'])
+         }
+         setTimeout(routerNavigate,2000)
+         this.toastr.success(apiResponse.message);
+      }else{
+        this.toastr.error(apiResponse.message);
+      }
+    },(err) => {
       this.toastr.error("some error occured");
     })
   }

@@ -99,4 +99,10 @@ export class AppService {
     return this.http.post(`${this.url}/editexpense?authToken=${this.Cookie.get('authToken')}`,params)
   }
 
+  public deleteExpense(expenseId):Observable<any>{
+    const params = new HttpParams()
+    .set('ExpenseId',expenseId)
+    return this.http.post(`${this.url}/deleteexpense?authToken=${this.Cookie.get('authToken')}`,params)
+  }
+
 }

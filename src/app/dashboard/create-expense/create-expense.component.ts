@@ -83,8 +83,22 @@ export class CreateExpenseComponent implements OnInit {
         );
       }
     }
-
     
+  }
+
+  public logout: any = () => {
+    this.appService.logout().subscribe((apiResponse) => {
+      if (apiResponse.status === 200) {
+        console.log("logout function called")
+        this.Cookie.deleteAll();
+
+        this.router.navigate(['/']);
+      } else {
+        this.toastr.error(apiResponse.message);
+      }
+    }, (err) => {
+      this.toastr.error("some error occured");
+    })
   }
 
 }

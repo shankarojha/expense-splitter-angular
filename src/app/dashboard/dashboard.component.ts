@@ -16,6 +16,7 @@ export class DashboardComponent implements OnInit {
   public userName = this.Cookie.get('firstName')+' '+this.Cookie.get('lastName')
   public userEmail =this.Cookie.get('email')
   public userNotifications = []
+  public userNotificationLength
 
   constructor(private appService:AppService, private router:Router, private toastr:ToastrService, private Cookie:CookieService, public SocketService: SocketService) { }
 
@@ -55,6 +56,7 @@ export class DashboardComponent implements OnInit {
         this.userNotifications.push(x)
       }
       this.userNotifications = this.userNotifications.reverse()
+      this.userNotificationLength = this.userNotifications.length
     })
   }
 
@@ -70,13 +72,25 @@ export class DashboardComponent implements OnInit {
     this.appService.logout().subscribe((apiResponse) => {
       if (apiResponse.status === 200) {
         console.log("logout function called")
-        this.Cookie.deleteAll('http://localhost:4200', 'http://localhost:4200');
+        this.Cookie.deleteAll();
 
         this.router.navigate(['/']);
       } else {
         this.toastr.error(apiResponse.message);
       }
     }, (err) => {
+      this.toastr.error("some error occured");
+    })
+  }
+
+  public deleteExpense = (expenseId) => {
+    this.appService.deleteExpense(expenseId).subscribe((apiResponse)=>{
+      if(apiResponse.status === 200){
+        this.toastr.success(apiResponse.message);
+      }else{
+        this.toastr.error(apiResponse.message);
+      }
+    },(err) => {
       this.toastr.error("some error occured");
     })
   }
