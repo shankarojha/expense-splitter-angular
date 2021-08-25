@@ -10,7 +10,7 @@ import 'rxjs'
   providedIn: 'root'
 })
 export class AppService {
-  private url = 'http://localhost:3000'
+  private url = 'http://api.firstpro.online/api/v1'
 
   constructor(private http:HttpClient, public router: Router, private Cookie:CookieService) { }
 
