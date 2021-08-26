@@ -25,6 +25,7 @@ export class SocketService {
   public getNotification = () =>{ 
 
     return new Observable((observer: Observer<any>) => {
+      console.log("yourNotifications")
       this.socket.on('YourNotifications',notificationData=>{
         observer.next(notificationData);
 
