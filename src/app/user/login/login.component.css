@@ -1,21 +1,10 @@
+
 .row {
+    height: 100vh;
     background-color: rgba(255, 255, 255, 0);
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    width: 80%;
     border-bottom: 2px solid rgba(0, 0, 0, 0.233);
     padding: 5px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     transition: 0.5s;
-  }
-  
-  .row:hover {
-    width: 81.5vw;
-    box-shadow: 0 12px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
   
   .box {
@@ -23,21 +12,15 @@
   }
   
   .formBox {
+    width: 100%;
     padding: 20px;
   }
   
-  .form-group {
-    margin-left: auto;
-    margin-right: auto;
+  img{
+    height: fit-content;
   }
   
-  .center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-    margin-bottom: 20px;
-  }
+  
   
   .linkClass {
     color: black;
@@ -45,26 +28,12 @@
   
   .formBox input[type="email"],
   .formBox input[type="password"],
-  .formBox label {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
+  .formBox label {  
+    width: 95%;
     transition: 0.25s;
   }
   
-  .formBox button {
-    background-color: white;
-    color: black;
-    font-size: 20px;
-    transition: 0.25s;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 3px 100px;
-    width: auto;
-    margin-top: 5vh;
-  }
+
   
   .formBox button:hover {
     background-color: black;
@@ -78,13 +47,26 @@
   
   .formBox input[type="email"]:hover,
   .formBox input[type="password"]:hover {
-    width: 55%;
+    width: 100%;
     border-color: green;
   }
   
-  @media only screen and (max-width: 480px) {
-    .formBox button {
-      font-size: 10px;
+  @media only screen and (max-width:576px) {
+    .row {
+      height: 100vh;
+    }
+
+    h1{
+      font-size: 20px;
+    }
+
+    img{
+      height: 100px;
+    }
+    
+
+    button {
+      font-size: 16px;
     }
   
     .linkClass {
@@ -92,22 +74,55 @@
     }
   
     .form-group {
-      font-size: 15px;
+      font-size: 16px;
     }
+
+    .formBox input[type="email"],
+  .formBox input[type="password"],
+  .formBox label {
+    width: 100%;
+  }
+
+  .formBox input[type="email"]:hover,
+  .formBox input[type="password"]:hover {
+    width: 100%;
+    border-color: green;
+  }
   }
   
-  @media only screen and (max-width: 768px) {
-    .formBox button {
-      font-size: 10px;
+  @media only screen and (min-width:577px) and (max-width:992px) {
+    button {
+      font-size: 16px;
     }
   
     .linkClass {
       color: black;
     }
+
+    h1{
+      font-size: 20px;
+    }
+
+    img{
+      height: 100px;
+    }
   
     .form-group {
-      font-size: 15px;
+      font-size: 16px;
     }
+
+    .formBox input[type="email"],
+    .formBox input[type="password"],
+    .formBox label {
+      width: 100%;
+    }
+  
+    .formBox input[type="email"]:hover,
+    .formBox input[type="password"]:hover {
+      width: 100%;
+      border-color: green;
+    }
+    
   }
   
   .gradient-bg2 {

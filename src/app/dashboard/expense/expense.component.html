@@ -2,99 +2,199 @@
     <span class="user">{{userName}}</span>
     <a class="dropdown-item" (click)="logout()">Logout <i class="fa fa-sign-out"></i></a>
 </app-navbar>
+
 <body>
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h3>Expense: {{expenseName}}</h3>
+                <h3>Expense Name:</h3>
+                <h4 style="color: rgb(0, 0, 253);">{{expenseName}}</h4>
             </div>
             <div class="col-12">
-                <h3>Amount: <input type="number" [(ngModel)]="amount"/></h3>
+                <h6>Amount: <h4 style="color: rgb(0, 0, 253);">{{amount}}</h4>
+                    <button class="btn btn-warning" (click)="amountChangeTrigger()">Change amount</button>
+                    <input style="margin-left: 10px; margin-top: 10px;" *ngIf="amountChangeTOggler" type="number"
+                        [(ngModel)]="amount" />
+                </h6>
             </div>
             <div class="col-12">
-                <h3>Paid By: {{paidBy}}</h3>
+                <h6>Paid By: ''{{paidBy | uppercase}}'</h6>
             </div>
             <div class="col-12">
+                <h6>Created on: {{createdOn | date}}</h6>
+            </div>
+            <div class="col-12">
+                <h6>Last modified on: {{modifiedOn | date}}</h6>
+            </div>
+        </div>
+        <div *ngFor="let item of members" class="row memberCard">
+            <div class="col-12 mt-3 text-center">
+                <h6>Member: {{item.email}}</h6>
+            </div>
+            <div style="border: 1px solid black;" class="col-6 pt-3 pb-3 d-flex align-items-center justify-content-center flex-column">
 
-                <table class="table table-striped table-dark text-center">
-                    <thead class="thead-light">
-                        <tr>
+                <h6>Owed:{{item.debt}}</h6>
 
-                            <th scope="col">Member</th>
-                            <th scope="col">Amount Owed</th>
-                            <th scope="col">Remaining amount</th>
-                            <th scope="col">Amount Paid</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of members">
+            </div>
+            <div style="border: 1px solid black; " class="col-6 pt-3 pb-3 d-flex align-items-center justify-content-center flex-column ">
 
-                            <td>{{item.email}}</td>
+
+                <h6 *ngIf="item.remaining==0">Payment Complete</h6>
+                <h6 *ngIf="item.remaining!==0">Remaining: {{item.remaining}}</h6>
+
+            </div>
+            <div style="border: 1px solid black;" class="col-6 pt-3 pb-3 d-flex align-items-center justify-content-center flex-column">
+
+                <h6>Paid: {{item.paid}}</h6>
+
+            </div>
+            <div style="border: 1px solid black;" class="col-6 pt-3 pb-3 d-flex align-items-center justify-content-center flex-column">
+
+                <button class="btn btn-warning" data-toggle="modal" data-target="#paymentModal" (click)="setPaid(item.paid,item.email)">Update Payment</button>
+
+            </div>
+            <div style="border: 1px solid black;" class="col-12 pt-3 pb-3 d-flex align-items-center justify-content-center flex-column">
+
+                <button data-toggle="modal" data-target="#memberRemoval" id="removeMemberTogglerId" class="btn btn-danger" #removeMemberToggler (click)="removeMember(item.email)">Remove Member's Payment</button>
+
+            </div>
+
+
+
+            <!-- <td>{{item.email}}</td>
                             <td>{{item.debt}}</td>
                             <td *ngIf="item.remaining==0">Payment Complete</td>
                             <td *ngIf="item.remaining!==0">{{item.remaining}}</td>
-                            <td><input type="number" [(ngModel)]="item.paid" (change)="paidClickedEvent(item.email,item.paid)"/>&nbsp;
-                                <a #removeMemberToggler (click)="removeMember(item.email)"><i class="fa fa-times"><span class="tooltiptext">&nbsp;Remove member</span></i></a>
+                            <td><input style="width: 50%;" type="number" [(ngModel)]="item.paid" (change)="paidClickedEvent(item.email,item.paid)"/>
                             </td>
-                        </tr>
+                            <td>
+                                <a id="removeMemberTogglerId" #removeMemberToggler (click)="removeMember(item.email)"><i class="fa fa-times"></i></a>
+                                <span class="tooltiptext">&nbsp;Remove member</span> -->
 
-                    </tbody>
-                </table>
-                <div class="row">
-                    <h4>Add Members: </h4>
-                    <div class="col-3">
-                        <input type="text" placeholder="email" [(ngModel)]="addEmail"/>
-                     </div>
-                     <div class="col-3">
-                         <input type="number" placeholder="amount paid" [(ngModel)]="addPaid"/>
-                     </div>
-                     <div class="col-2 text-center">
-                        <button class="btn btn-primary" (click)="addDebtors()">Add member</button>
+           
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <h6 style="margin-left: 25px;">Add Members: </h6>
+                <div class="col-3">
+                    <input type="text" placeholder="email" [(ngModel)]="addEmail" />
+                </div>
+                <div class="col-3">
+                    <input type="number" placeholder="amount paid" [(ngModel)]="addPaid" />
+                </div>
+                <div class="col-2 text-center">
+                    <button class="btn btn-primary" (click)="addDebtors()">Add member</button>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-12">
+            <p style="font-weight: 800;" *ngIf="debtorsToAdd.length>=1">Members that will be added:</p>
+            <p *ngFor="let item of debtorsToAdd">{{item.email}}</p>
+        </div>
+        <div class="col-6">
+            <button class="btn btn-dark" (click)="editExpense()">Save</button>
+        </div>
+        <div class="col-6">
+            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalLong">
+                History
+            </button>
+        </div>
+        <div class="col-6">
+            <button type="button" class="btn btn-danger" (click)="deleteExpense()">
+                Delete expense
+            </button>
+        </div>
+        
+        
+        <!--MODAL-->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">History</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                </div>
-                <div class="col-12">
-                    <p style="font-weight: 800;" *ngIf="debtorsToAdd.length>=1">Members that will be added:</p>
-                    <p *ngFor="let item of debtorsToAdd">{{item.email}}</p>
-                    <p style="font-weight: 800;" *ngIf="membersToremove.length>=1">Members that will be removed:</p>
-                    <p *ngFor="let item of membersToremove">{{item}}</p>
-                </div>
-                <div class="col-6">
-                    <button class="btn btn-dark" (click)="savePaymentInfo()">Update Payment</button>
-                </div>
-                <div class="col-6">
-                    <button class="btn btn-dark" (click)="editExpense()">Save</button>
-                </div>
-                <div class="col-6">
-                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalLong">
-                        History
-                    </button>
-                </div>
-                <div class="col-6">
-                    <button type="button" class="btn btn-danger" (click)="deleteExpense()">
-                        Delete expense
-                    </button>
+                    <div class="modal-body">
+                        <p *ngFor="let item of history"><i class="fa fa-dot-circle-o"></i>&nbsp;&nbsp;{{item}}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <!--MODAL-->
-        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">History</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p *ngFor="let item of history"><i class="fa fa-dot-circle-o"></i>&nbsp;&nbsp;{{item}}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHANGE PAYMENT MODAL-->
+
+        <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">History</h5>
+                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
-                    <p *ngFor="let item of history"><i class="fa fa-dot-circle-o"></i>&nbsp;&nbsp;{{item}}</p>
+                    <input type="number" [(ngModel)]="changePaid" (change)="paidClickedEvent()"/>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="savePaymentInfo()">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
               </div>
             </div>
           </div>
+
+        <!-- CHANGE PAYMENT MODAL ENDS-->
+
+        <!-- MEMBER REMOVAL MODAL-->
+
+        <div class="modal fade" id="memberRemoval" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                  <button type="button" (click)="emptyRemoveArray()" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body text-center">
+                    <button type="button" class="btn btn-danger" (click)="editExpense()">Remove</button>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="emptyRemoveArray()">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <!-- MEMBER REMOVAL MODAL ENDS-->
 
         <!-- MODAL ENDS-->
     </div>

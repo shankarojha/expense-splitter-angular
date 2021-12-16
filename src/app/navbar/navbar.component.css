@@ -1,6 +1,8 @@
 .navbar{
+    top: 0;
     z-index: 10;
     height: 10vh;
+    width: 100%;
   /*  background: rgb(9,9,121) !important;
     background: linear-gradient(90deg, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 50%, rgba(9,9,121,1) 100%) !important;
 */}
@@ -13,15 +15,22 @@
 }
 
 .navbar-brand{
-    font-size: 2em;
+    font-size: 1.5em;
 }
 
+img{
+    height: 8vh;
+}
 
 @media only screen and (max-width:576px) {
     
     .navbar-collapse{
         z-index: 20;
         background: rgb(68, 68, 68);
+    }
+
+    .navbar-brand{
+        font-size: 1em;
     }
   }
 

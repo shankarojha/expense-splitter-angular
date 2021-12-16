@@ -32,8 +32,12 @@ export class ExpenseComponent implements OnInit {
   public addEmail: string
   public addPaid: number
   public totalDebters: number
+  public changePaid:number
+  public changePaidEmail:number
   public removeMemberToggle: Boolean = false
   toggleClass: boolean = false;
+  public paymentChanged: boolean = false
+  public amountChangeTOggler:boolean=false
 
 
   constructor(private route: ActivatedRoute, private appService: AppService, private router: Router, private toastr: ToastrService, private Cookie: CookieService, public SocketService: SocketService) { }
@@ -41,7 +45,6 @@ export class ExpenseComponent implements OnInit {
   ngOnInit(): void {
     this.getHistory()
     this.getExpenseDetails()
-    console.log(this.expenseId)
     this.SocketService.sendHistory(this.expenseId)
   }
 
@@ -59,7 +62,6 @@ export class ExpenseComponent implements OnInit {
 
   getExpenseDetails = (): any => {
     this.appService.getExpenseDetails(this.Cookie.get('selectedExpense')).subscribe((apiResponse) => {
-      console.log(apiResponse)
 
       this.expenseName = apiResponse.data.ExpenseName
       this.createdOn = apiResponse.data.createdOn
@@ -97,14 +99,13 @@ export class ExpenseComponent implements OnInit {
         ExpenseId: this.expenseId,
         userEmail: this.Cookie.get('email')
       }
-      console.log(data)
       this.appService.updatePayment(data).subscribe((apiResponse) => {
         if (apiResponse.status == 200) {
           this.toastr.success(apiResponse.message);
-          let routerNavigate = () =>{
-            this.router.navigate([`/dashboard`])
-           }
-           setTimeout(routerNavigate,1000)
+          this.paymentChanged=false
+          setTimeout(()=>{
+            window.location.reload()
+          },1000)
         } else {
           this.toastr.error(apiResponse.message);
         }
@@ -112,23 +113,31 @@ export class ExpenseComponent implements OnInit {
     }
   }
 
-  paidClickedEvent = (email, paid) => {
+  setPaid = (paid,email) => {
+    this.changePaid=paid
+    this.changePaidEmail=email
+  }
+
+  paidClickedEvent = () => {
     let changeObj = {
-      paidChange: paid,
-      paidChangeEmail: email
+      paidChange: this.changePaid,
+      paidChangeEmail: this.changePaidEmail
     }
 
     this.changePayment.push(changeObj)
-    console.log(this.changePayment)
+    this.paymentChanged = true
   }
 
   removeMember = (email) => {
     if (!this.membersToremove.includes(email)) {
       this.membersToremove.push(email)
-      console.log(this.membersToremove)
     } else {
       this.toastr.error('member already added to removal list')
     }
+  }
+
+  emptyRemoveArray=()=>{
+    this.membersToremove=[]
   }
 
   addDebtors = () => {
@@ -147,49 +156,53 @@ export class ExpenseComponent implements OnInit {
     } else {
       this.toastr.error('member already added to list. Please save to continue')
     }
-    console.log(this.debtorsToAdd)
   };
 
   editExpense = () => {
 
-    let data = {
-      userEmail: this.userName,
-      ExpenseId: this.expenseId,
-      amount: this.amount,
-      debtors: null,
-      removeMembers: null,
-    }
-    if (this.debtorsToAdd) {
-      data.debtors = JSON.stringify(this.debtorsToAdd);
-    }
-    if (this.membersToremove) {
-      data.removeMembers = JSON.stringify(this.membersToremove);
+    if(this.paymentChanged==true){
+      this.toastr.error("Please update payment first");
+    }else{
+      let data = {
+        userEmail: this.userName,
+        ExpenseId: this.expenseId,
+        amount: this.amount,
+        debtors: null,
+        removeMembers: null,
+      }
+      if (this.debtorsToAdd) {
+        data.debtors = JSON.stringify(this.debtorsToAdd);
+      }
+      if (this.membersToremove) {
+        data.removeMembers = JSON.stringify(this.membersToremove);
+      }
+  
+      if (data) {
+        this.appService.editExpense(data).subscribe(
+          (apiResponse) => {
+            if (apiResponse.status === 200) {
+              let routerNavigate = () =>{
+                window.location.reload()
+               }
+               setTimeout(routerNavigate,1000)
+              this.toastr.success('successfully edited');
+            } else {
+              this.toastr.error(apiResponse.message);
+            }
+          },
+          (err) => {
+            this.toastr.error(err);
+          }
+        );
+      }
     }
 
-    if (data) {
-      this.appService.editExpense(data).subscribe(
-        (apiResponse) => {
-          if (apiResponse.status === 200) {
-            let routerNavigate = () =>{
-              this.router.navigate([`/dashboard`])
-             }
-             setTimeout(routerNavigate,1000)
-            this.toastr.success('successfully edited');
-          } else {
-            this.toastr.error(apiResponse.message);
-          }
-        },
-        (err) => {
-          this.toastr.error(err);
-        }
-      );
-    }
+    
   }
 
   public logout: any = () => {
     this.appService.logout().subscribe((apiResponse) => {
       if (apiResponse.status === 200) {
-        console.log("logout function called")
         this.Cookie.deleteAll();
 
         this.router.navigate(['/']);
@@ -215,6 +228,10 @@ export class ExpenseComponent implements OnInit {
     },(err) => {
       this.toastr.error("some error occured");
     })
+  }
+
+ public amountChangeTrigger = () => {
+    this.amountChangeTOggler=!this.amountChangeTOggler
   }
 
 }

@@ -1,36 +1,43 @@
-<app-navbar>
-    <span class="user">user</span>
-    <a class="dropdown-item" routerLink="/user/signup">signup</a>
-</app-navbar>
 
-<body class="container-fluid login-page gradient-bg">
+
+<body class="container-fluid">
     <div class="row gradient-bg2">
-        <div class="col-md-12 box">
-           
-
-            <form class="formBox">
+        <div class="col-4 d-flex flex-column align-items-center justify-content-center">
+            <img src="../../../assets/icon/bill.png" alt="logo"><br>
+            <div>
+                <h1>X-PENSE SPLITTER</h1>
+            </div>
+        </div>
+        <div class="col-8 box d-flex align-items-center justify-content-center">
+            
+            <div>
+                <h4 style="text-align: center; margin-top: 5px;">Login</h4>
+                <form class="formBox">
                 
-                <div class="form-group">
-                    <label for="InputEmail1">Email</label>
-                    <input name="email" [(ngModel)]="email" type="email" class="form-control" id="InputEmail1">
-                </div>
-                <div class="form-group">
-                    <label for="InputPassword1">Password</label>
-                    <input name="password" [(ngModel)]="password" type="password" class="form-control"
-                        id="InputPassword1">
-                </div>
-                <div class="form-group">
-                    <button (click)="loginFunction()" type="submit"
-                        class="btn btn-outline-dark">Login</button>
-                </div>
-                <div style="text-align: center; font-size: 1.5vw;">
-                    <a class="linkClass" routerLink="/user/signup">Signup</a>
-                </div>
-                <div class="form-group">
-                    <button (click)="forgotPassword()" type="submit"
-                        class="btn btn-outline-dark">Forgot password</button>
-                </div>
-            </form>
+                    <div class="form-group">
+                        <label for="InputEmail1">Email</label>
+                        <input name="email" [(ngModel)]="email" type="email" class="form-control" id="InputEmail1">
+                    </div>
+                    <div class="form-group">
+                        <label for="InputPassword1">Password</label>
+                        <input name="password" [(ngModel)]="password" type="password" class="form-control"
+                            id="InputPassword1">
+                    </div>
+                    <div class="form-group d-flex justify-content-center">
+                        <button (click)="loginFunction()" type="submit"
+                            class="btn btn-outline-dark">Login</button>
+                    </div>
+                    <div class="text-center">
+                        <a class="linkClass" routerLink="/user/signup">Signup</a>
+                    </div>
+                    <div class="form-group d-flex justify-content-center mt-3">
+                        <button (click)="forgotPassword()" type="submit"
+                            class="btn btn-outline-dark">Forgot password</button>
+                    </div>
+                </form>
+            </div>
+
+            
         </div>
     </div>
 </body>
