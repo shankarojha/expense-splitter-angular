@@ -21,11 +21,9 @@ export class PasswordresetComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.route.snapshot.paramMap.get('userId')
-    console.log(this.userId)
     
     this.route.queryParams.subscribe(params =>{
       this.authToken = params.authToken
-      console.log(this.authToken)
     })
   }
 

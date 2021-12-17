@@ -18,14 +18,12 @@ export class SocketService {
 
    public sendNotification = (userEmail) =>{
 
-    console.log("send-notification-called", userEmail);
     this.socket.emit('sendNotification',userEmail);
   }
 
   public getNotification = () =>{ 
 
     return new Observable((observer: Observer<any>) => {
-      console.log("yourNotifications")
       this.socket.on('YourNotifications',notificationData=>{
         observer.next(notificationData);
 
@@ -36,17 +34,14 @@ export class SocketService {
 
   public sendHistory = (userEmail) =>{
 
-    console.log("send-notification-called", userEmail);
     this.socket.emit('sendHistory',userEmail);
   }
 
   public getHistory = () =>{ 
 
-    console.log("get-notification-called")
     return new Observable((observer: Observer<any>) => {
       this.socket.on('yourHistory',notificationData=>{
         observer.next(notificationData);
-        console.log("notifiation recieved from the server is:",notificationData);
 
       });
     });
@@ -57,7 +52,6 @@ export class SocketService {
 
   public exitSocket = () => {    
 
-    console.log("exit socket called")
 
     this.socket.disconnect();
 

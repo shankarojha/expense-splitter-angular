@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit {
       this.appService.loginFunction(data).subscribe(
         (apiResponse) => {
           if (apiResponse.status === 200) {
-            console.log(apiResponse)
             this.Cookie.set('userId', apiResponse.data.userDetails.userId);
             this.Cookie.set('email', apiResponse.data.userDetails.email);
             this.Cookie.set('mobile',apiResponse.data.userDetails.mobile);
@@ -77,7 +76,6 @@ export class LoginComponent implements OnInit {
 
   forgotPassword = () =>{
     if(this.email){
-      console.log(this.email)
       this.appService.forgotPassword(this.email).subscribe((apiResponse)=>{
         if(apiResponse.error==false){
           this.toastr.success('password rest link has been sent to your email')

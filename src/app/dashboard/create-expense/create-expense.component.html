@@ -1,51 +1,76 @@
 <app-navbar>
-    <span class="user">{{userName}}</span>
-    <a class="dropdown-item" (click)="logout()">Logout <i class="fa fa-sign-out"></i></a>
+  <span class="user">{{userName}}</span>
+  <a class="dropdown-item" (click)="logout()">Logout <i class="fa fa-sign-out"></i></a>
 </app-navbar>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h3>Create Expense</h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <form>
-                    <div class="form-group">
-                        <label for="expenseName">Enter name for your expense</label>
-                        <input name="ExpenseName" type="text" class="form-control" id="expenseName" placeholder="Expense name" [(ngModel)]="ExpenseName">
-                      </div>
-                      <div class="form-group">
-                        <label for="amount">Amount</label>
-                        <input name="amount" type="number" class="form-control" id="amount" placeholder="Amount" [(ngModel)]="amount">
-                      </div>
-                      <div class="form-group">
-                        <label for="paidBy">Enter email of the payer</label>
-                        <input name="paidBy" type="text" class="form-control" id="paidBy" placeholder="Paid By" [(ngModel)]="paidBy">
-                      </div>
-                      <div class="form-group">
-                          <div class="col-6 m-2">
-                            <label style="margin-right: 10px;" for="addmembers">Enter member's email</label>
-                            <input name="addEmail"  id="addmembers" type="email" placeholder="email" [(ngModel)]="addEmail"/>
-                          </div>
-                          <div class="col-6 m-2">
-                            <label style="margin-right: 10px;" for="addmemberspaid">Enter amount paid</label>
-                            <input name="addPaid" id="addmemberspaid" type="number" placeholder="amount" [(ngModel)]="addPaid"/>
-                          </div>
-                          <div class="col-6 m-2">
-                            <button class="btn btn-primary" (click)="addDebtors()">Add member</button>
-                          </div>
-                      </div>
-                </form>
-                <div class="">
-                    <p style="color: rgb(0, 140, 255);" *ngFor="let item of debtorsToAdd">{{item.email}}</p>
-                </div>
-            </div>
-            <div class="col-12 text-center">
-                <button type="button" class="btn btn-dark" (click)="createExpense()">Create expense</button>
-            </div>
-        </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mt-3">
+        <h3 style="border-bottom: 2px solid #000; padding-bottom: 3px;">Create Expense</h3>
+      </div>
     </div>
+  </div>
+
+  <div class="container">
+    <div class="row d-flex justify-content-center align-items-center">
+        <form>
+          <div class="form-group mt-3">
+            <label for="expenseName">Enter name for your expense</label>
+            <input name="ExpenseName" type="text" class="form-control" id="expenseName" placeholder="Expense name"
+              [(ngModel)]="ExpenseName">
+          </div>
+          <div class="form-group">
+            <label for="amount">Amount</label>
+            <input name="amount" type="number" class="form-control" id="amount" placeholder="Amount"
+              [(ngModel)]="amount">
+          </div>
+          <div class="form-group">
+            <label for="paidBy">Enter email of the payer</label>
+            <input name="paidBy" type="text" class="form-control" id="paidBy" placeholder="Paid By"
+              [(ngModel)]="paidBy">
+          </div>
+          <div class="form-group text-center mt-5">
+            
+            <div class="col-12" style="border: 1px solid black; padding: 10px;" *ngFor="let item of debtorsToAdd">
+              <div class="col-12">
+                <h6 style="color: rgb(0, 140, 255);">Email: {{item.email | uppercase}}</h6>
+              </div>
+              <div class="col-12">
+                <p style="color: rgb(255, 51, 0);">Paid: {{item.paid}}</p>
+              </div>
+            </div>
+              <button class="btn btn-dark mt-3" data-toggle="modal" data-target="#memberAdd" id="addMemberTogglerId">Add member</button>
+          </div>
+        </form>
+      </div>
+      <div class="col-12 text-center">
+        <button type="button" class="btn btn-success" (click)="createExpense()">Create expense</button>
+      </div>
+  </div>
+
+  <!-- MEMBER ADDITION MODAL-->
+
+  <div class="modal fade" id="memberAdd" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+          <button type="button" (click)="emptyDebtors()" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center">
+            <input class="mt-3" type="text" placeholder="email" [(ngModel)]="addEmail" />
+            <input class="mt-3" type="number" placeholder="amount paid" [(ngModel)]="addPaid" />
+        </div>
+        <div class="modal-footer">
+            <button *ngIf="addEmail && addPaid" type="button" class="btn btn-success" (click)="addDebtors()">Add member</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="emptyDebtors()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEMBER ADDITION MODAL ENDS-->
 </body>

@@ -34,8 +34,9 @@ export class ExpenseComponent implements OnInit {
   public totalDebters: number
   public changePaid:number
   public changePaidEmail:number
+  public tempAmount:number
   public removeMemberToggle: Boolean = false
-  toggleClass: boolean = false;
+  public toggleClass: boolean = false;
   public paymentChanged: boolean = false
   public amountChangeTOggler:boolean=false
 
@@ -150,6 +151,7 @@ export class ExpenseComponent implements OnInit {
         this.debtorsToAdd.push({ email: this.addEmail, paid: this.addPaid })
         this.addEmail = null;
         this.addPaid = null;
+        this.editExpense()
       } else {
         this.toastr.error('member already added to list. Please save to continue')
       }
@@ -157,6 +159,12 @@ export class ExpenseComponent implements OnInit {
       this.toastr.error('member already added to list. Please save to continue')
     }
   };
+
+  emptyDebtors = () => {
+    this.debtorsToAdd = []
+    this.addEmail=null
+    this.addPaid=null
+  }
 
   editExpense = () => {
 

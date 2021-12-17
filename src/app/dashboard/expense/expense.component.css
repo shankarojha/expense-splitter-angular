@@ -1,54 +1,18 @@
-    
-    
-h6{
-    font-size: 1em;
+h6 {
+  font-size: 1em;
 }
 
-.memberCard{
-    border: 3px solid rgb(0, 43, 184);
-    background-color: rgba(245, 209, 2, 0.137);
+.memberCard {
+color:rgb(255, 255, 255);
+  border: 3px solid rgb(255, 255, 255);
+  background-color: rgba(0, 0, 0, 0.719);
 }
 
-.fa-times{
-    color:rgb(124, 21, 3);
-    font-size: 25px;
-}
-
-.fa-times:hover{
-    color:rgb(255, 43, 6)
-}
-
-.tooltiptext {
-    visibility: hidden;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-  
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
+@media only screen and (max-width: 576px) {
+  button {
+    font-size: 0.8em;
   }
+}
 
-  .fa-times:hover .tooltiptext {
-    visibility: visible;
-  }
-
-  @media only screen and (max-width:576px){
-    
-    button{
-        font-size: 0.8em;
-    }
-    .fa-times{
-        font-size: 10px;
-    }
-    }
-    
-    @media only screen and (min-width:577px) and (max-width:992px){
-
-        .fa-times{
-            font-size: 20px;
-        }
-    
-    }
+@media only screen and (min-width: 577px) and (max-width: 992px) {
+}

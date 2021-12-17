@@ -15,6 +15,7 @@
                     <button class="btn btn-warning" (click)="amountChangeTrigger()">Change amount</button>
                     <input style="margin-left: 10px; margin-top: 10px;" *ngIf="amountChangeTOggler" type="number"
                         [(ngModel)]="amount" />
+                    <button *ngIf="amountChangeTOggler" class="btn btn-success m-3" (click)="editExpense()">Save</button>
                 </h6>
             </div>
             <div class="col-12">
@@ -74,7 +75,17 @@
            
         </div>
 
-        <div class="row">
+        <!-- ADD MEMBER -->
+
+        <div class="row mt-3 mb-3 text-center">
+            <div class="col-12">
+                <button data-toggle="modal" data-target="#memberAdd" id="addMemberTogglerId" class="btn btn-primary">Add new member</button>
+            </div>
+        </div>
+
+        <!-- ADD MEMBER ENDS -->
+
+        <!-- <div class="row">
             <div class="col-12">
                 <h6 style="margin-left: 25px;">Add Members: </h6>
                 <div class="col-3">
@@ -88,23 +99,26 @@
                 </div>
             </div>
 
-        </div>
-        <div class="col-12">
+        </div> -->
+
+        <!-- <div class="col-12">
             <p style="font-weight: 800;" *ngIf="debtorsToAdd.length>=1">Members that will be added:</p>
             <p *ngFor="let item of debtorsToAdd">{{item.email}}</p>
-        </div>
-        <div class="col-6">
+        </div> -->
+        <!-- <div class="col-6">
             <button class="btn btn-dark" (click)="editExpense()">Save</button>
-        </div>
-        <div class="col-6">
-            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalLong">
-                History
-            </button>
-        </div>
-        <div class="col-6">
-            <button type="button" class="btn btn-danger" (click)="deleteExpense()">
-                Delete expense
-            </button>
+        </div> -->
+        <div class="row">
+            <div class="col-12 mt-3 mb-3 text-center">
+                <button style="font-size: 1.5em;" type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalLong">
+                    History
+                </button>
+            </div>
+            <div class="col-12 mb-3 text-center">
+                <button style="font-size: 1.5em;" type="button" class="btn btn-danger" (click)="deleteExpense()">
+                    Delete expense
+                </button>
+            </div>
         </div>
         
         
@@ -195,6 +209,31 @@
           </div>
 
         <!-- MEMBER REMOVAL MODAL ENDS-->
+
+         <!-- MEMBER ADDITION MODAL-->
+
+         <div class="modal fade" id="memberAdd" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Add member</h5>
+                  <button type="button" (click)="emptyDebtors()" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body text-center">
+                    <input type="text" placeholder="email" [(ngModel)]="addEmail" />
+                    <input type="number" placeholder="amount paid" [(ngModel)]="addPaid" />
+                </div>
+                <div class="modal-footer">
+                    <button *ngIf="addEmail && addPaid" type="button" class="btn btn-success" (click)="addDebtors()">Add member</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="emptyDebtors()">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MEMBER ADDITION MODAL ENDS-->
 
         <!-- MODAL ENDS-->
     </div>

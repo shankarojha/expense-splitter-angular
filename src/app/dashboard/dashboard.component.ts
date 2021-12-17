@@ -51,7 +51,6 @@ export class DashboardComponent implements OnInit {
 
   getNotification=():any => {
     this.SocketService.getNotification().subscribe((apiResponse)=>{
-      console.log(apiResponse)
       for(let x of apiResponse.message){
         this.userNotifications.push(x)
       }
@@ -71,7 +70,6 @@ export class DashboardComponent implements OnInit {
   public logout: any = () => {
     this.appService.logout().subscribe((apiResponse) => {
       if (apiResponse.status === 200) {
-        console.log("logout function called")
         this.Cookie.deleteAll();
 
         this.router.navigate(['/']);

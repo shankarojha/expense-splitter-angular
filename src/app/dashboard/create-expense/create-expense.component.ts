@@ -37,8 +37,12 @@ export class CreateExpenseComponent implements OnInit {
     } else {
       this.toastr.error('member already added to list. Please save to continue')
     }
-    console.log(this.debtorsToAdd)
   };
+
+  emptyDebtors=()=>{
+    this.addEmail=null
+    this.addPaid=null
+  }
 
   createExpense = ():any => {
 
@@ -89,7 +93,6 @@ export class CreateExpenseComponent implements OnInit {
   public logout: any = () => {
     this.appService.logout().subscribe((apiResponse) => {
       if (apiResponse.status === 200) {
-        console.log("logout function called")
         this.Cookie.deleteAll();
 
         this.router.navigate(['/']);
